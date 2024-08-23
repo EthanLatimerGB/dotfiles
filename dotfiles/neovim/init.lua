@@ -5,7 +5,7 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -169,16 +169,17 @@ require('lazy').setup({
       require('which-key').setup()
 
       -- Document existing key chains
-      require('which-key').register {
-        ['<leader>c'] = { name = '[C]ode', _ = 'which_key_ignore' },
-        ['<leader>d'] = { name = '[D]ocument', _ = 'which_key_ignore' },
-        ['<leader>r'] = { name = '[R]ename', _ = 'which_key_ignore' },
-        ['<leader>s'] = { name = '[S]earch', _ = 'which_key_ignore' },
-        ['<leader>w'] = { name = '[W]orkspace', _ = 'which_key_ignore' },
+      require('which-key').add {
+        { '<leader>c', group = '[C]ode' },
+        { '<leader>d', group = '[D]ocument' },
+        { '<leader>r', group = '[R]ename' },
+        { '<leader>s', group = '[S]earch' },
+        { '<leader>w', group = '[W]orkspace' },
+        { '<leader>t', group = '[T]oggle' },
+        { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       }
     end,
   },
-
   { -- Fuzzy Finder (files, lsp, etc)
     'nvim-telescope/telescope.nvim',
     event = 'VimEnter',
@@ -430,9 +431,21 @@ require('lazy').setup({
         --    https://github.com/pmizio/typescript-tools.nvim
         --
         -- But for many setups, the LSP (`tsserver`) will work just fine
-        -- tsserver = {},
-        --
-
+        volar = {
+          filetypes = { 'vue', 'javascript', 'typescript', 'javascriptreact', 'typescriptreact' },
+          init_options = {
+            vue = {
+              hybridMode = false,
+            },
+            typescript = {
+              -- Global install of typescript
+              --tsdk = '~/.nvm/versions/node/v20.11.1/lib/node_modules/typescript',
+              -- Current project version and what I will likely use
+              tsdk = vim.fn.getcwd() .. 'node_modules/typescript/lib',
+            },
+          },
+        },
+        tsserver = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -447,6 +460,7 @@ require('lazy').setup({
             },
           },
         },
+        jedi_language_server = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -506,7 +520,10 @@ require('lazy').setup({
         }
       end,
       formatters_by_ft = {
-        lua = { 'stylua' },
+        lua = { 'stylua', '' },
+        php = { './vendor/bin/pint' },
+        javascript = { 'prettier' },
+
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
@@ -751,6 +768,6 @@ require('lazy').setup({
     },
   },
 })
-
+--
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
