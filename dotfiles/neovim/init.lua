@@ -625,7 +625,7 @@ require("lazy").setup({
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				-- tsserver = {},
 				--
-				tsserver = {
+				ts_ls = {
 					init_options = {
 						plugins = {
 							{
@@ -656,6 +656,15 @@ require("lazy").setup({
 							-- diagnostics = { disable = { 'missing-fields' } },
 						},
 					},
+				},
+				clangd = {
+					filetypes = { "c", "cpp", "cuda" },
+					cmd = {
+						"clangd",
+						"--compile-commands-dir=.", -- This is how we get LSP to recognise compile-commands.json
+						"--query-driver=/usr/bin/arm-none-eabi-g*",
+					}, -- This is how we get lsp to import correct ARM overrides of stdlib (pico)
+					single_file_support = true,
 				},
 			}
 
@@ -718,7 +727,7 @@ require("lazy").setup({
 					lsp_format_opt = "fallback"
 				end
 				return {
-					timeout_ms = 500,
+					timeout_ms = 5000,
 					lsp_format = lsp_format_opt,
 				}
 			end,
@@ -726,6 +735,8 @@ require("lazy").setup({
 				lua = { "stylua" },
 				php = { "./vendor/bin/pint" },
 				javascript = { "prettier" },
+				vue = { "prettier" },
+				python = { "black" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
@@ -856,16 +867,24 @@ require("lazy").setup({
 		-- change the command in the config to whatever the name of that colorscheme is.
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-		"folke/tokyonight.nvim",
+		"0xstepit/flow.nvim",
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		init = function()
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
+			vim.cmd.colorscheme("flow")
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
+		end,
+		config = function()
+			require("flow").setup({
+				transparent = false, -- Set transparent background.
+				fluo_color = "orange", --  Fluo color: pink, yellow, orange, or green.
+				mode = "normal", -- Intensity of the palette: normal, bright, desaturate, or dark. Notice that dark is ugly!
+				aggressive_spell = false, -- Display colors for spell check.
+			})
 		end,
 	},
 
