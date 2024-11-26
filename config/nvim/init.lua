@@ -731,12 +731,20 @@ require("lazy").setup({
 					lsp_format = lsp_format_opt,
 				}
 			end,
+			formatters = {
+				indent = {
+					command = "indent",
+					args = { "-linux" },
+				},
+			},
 			formatters_by_ft = {
 				lua = { "stylua" },
 				php = { "./vendor/bin/pint" },
 				javascript = { "prettier" },
 				vue = { "prettier" },
 				python = { "black" },
+				c = { "indent" },
+				cpp = { "indent" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
