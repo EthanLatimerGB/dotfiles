@@ -642,7 +642,14 @@ require("lazy").setup({
 					},
 				},
 				volar = {},
-				jedi_language_server = {},
+				pyright = {
+					filetypes = { "python" },
+					analysis = {
+						autoSearchPaths = true,
+						diagnosticMode = "openFilesOnly",
+						useLibraryCodeForTypes = true,
+					},
+				},
 				lua_ls = {
 					-- cmd = {...},
 					-- filetypes = { ...},
