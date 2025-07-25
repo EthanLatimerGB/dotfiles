@@ -100,6 +100,9 @@ vim.g.have_nerd_font = false
 
 -- Make line numbers default
 vim.opt.number = true
+vim.opt.spell = true
+vim.opt.spelllang = "en_gb"
+
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
@@ -384,11 +387,6 @@ require("lazy").setup({
 				-- You can put your default mappings / updates / etc. in here
 				--  All the info you're looking for is in `:help telescope.setup()`
 				--
-				-- defaults = {
-				--   mappings = {
-				--     i = { ['<c-enter>'] = 'to_fuzzy_refine' },
-				--   },
-				-- },
 				-- pickers = {}
 				extensions = {
 					["ui-select"] = {
@@ -403,6 +401,7 @@ require("lazy").setup({
 
 			-- See `:help telescope.builtin`
 			local builtin = require("telescope.builtin")
+
 			vim.keymap.set("n", "<leader>sh", builtin.help_tags, { desc = "[S]earch [H]elp" })
 			vim.keymap.set("n", "<leader>sk", builtin.keymaps, { desc = "[S]earch [K]eymaps" })
 			vim.keymap.set("n", "<leader>sf", builtin.find_files, { desc = "[S]earch [F]iles" })
@@ -419,7 +418,7 @@ require("lazy").setup({
 				-- You can pass additional configuration to Telescope to change the theme, layout, etc.
 				builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 					winblend = 10,
-					previewer = false,
+					previewer = true,
 				}))
 			end, { desc = "[/] Fuzzily search in current buffer" })
 
@@ -641,7 +640,6 @@ require("lazy").setup({
 						"vue",
 					},
 				},
-				volar = {},
 				pyright = {
 					filetypes = { "python" },
 					analysis = {
@@ -877,19 +875,22 @@ require("lazy").setup({
 		end,
 	},
 	{
-		"folke/tokyonight.nvim",
-		lazy = false,
+		"savq/melange-nvim",
 		priority = 1000,
-		opts = {},
 		init = function()
 			-- Load the colorscheme here.
 			-- Like many other themes, this one has different styles, and you could load
 			-- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-			vim.cmd.colorscheme("tokyonight-night")
+			vim.cmd.colorscheme("melange")
 
 			-- You can configure highlights by doing something like:
 			vim.cmd.hi("Comment gui=none")
 		end,
+	},
+	{
+		"folke/tokyonight.nvim",
+		lazy = false,
+		opts = {},
 	},
 	-- Highlight todo, notes, etc in comments
 	{
@@ -1020,3 +1021,14 @@ require("lazy").setup({
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+--
+
+vim.api.nvim_create_autocmd("CursorHold", {
+	callback = function()
+		vim.diagnostic.open_float(nil, {
+			focus = false,
+			scope = "line",
+			max_width = 100,
+		})
+	end,
+})
