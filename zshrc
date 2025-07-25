@@ -112,3 +112,5 @@ export NVM_DIR="$HOME/.nvm"
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 alias uni="cd ~/Dev/University/"
 
+
+. "$HOME/.local/bin/env"
