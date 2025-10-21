@@ -758,7 +758,7 @@ require("lazy").setup({
 				lua = { "stylua" },
 				php = { "./vendor/bin/pint" },
 				javascript = { "prettier" },
-				-- vue = { "prettier" }, Disabled since project does not have prettier
+				vue = { "prettier" },
 				python = { "black" },
 				c = { "indent" },
 				cpp = { "indent" },
