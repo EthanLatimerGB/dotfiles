@@ -233,6 +233,36 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
 	-- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
 	"tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
+	{
+		"m4xshen/autoclose.nvim",
+
+		config = function()
+			require("autoclose").setup({
+				keys = {
+					["("] = { escape = false, close = true, pair = "()" },
+					["["] = { escape = false, close = true, pair = "[]" },
+					["{"] = { escape = false, close = true, pair = "{}" },
+
+					[">"] = { escape = true, close = false, pair = "<>" },
+					[")"] = { escape = true, close = false, pair = "()" },
+					["]"] = { escape = true, close = false, pair = "[]" },
+					["}"] = { escape = true, close = false, pair = "{}" },
+
+					['"'] = { escape = true, close = true, pair = '""' },
+					["'"] = { escape = true, close = true, pair = "''" },
+					["`"] = { escape = true, close = true, pair = "``" },
+				},
+				options = {
+					disabled_filetypes = { "text" },
+					disable_when_touch = false,
+					touch_regex = "[%w(%[{]",
+					pair_spaces = false,
+					auto_indent = true,
+					disable_command_mode = false,
+				},
+			})
+		end,
+	},
 	{ "tpope/vim-fugitive" },
 	{ "mrcjkb/haskell-tools.nvim", version = "^3", lazy = false },
 
