@@ -47,7 +47,7 @@ function echo_noti {
 }
 
 function echo_progress {
-	notify-send "Brightness" \
+	notify-send -a "Brightness Control" "Brightness" \
 		-h int:value:$1 \
 		-h int:max:100 \
 		-h string:transient:1
@@ -118,9 +118,9 @@ function monitor_handler {
 		fi
 
 		if (( $1 == 1 )); then
-			new_brightness=$(modify_brightness "$brightness" 5)
+			new_brightness=$(modify_brightness "$brightness" 10)
 		else
-			new_brightness=$(modify_brightness "$brightness" -5)
+			new_brightness=$(modify_brightness "$brightness" -10)
 		fi
 
 		cache_set "g_brightness" "$new_brightness"
