@@ -2,7 +2,7 @@
 @import "colors.css";
 
 * {
-    font-family: "Rubik", "Font Awesome 7 Brands", "Font Awesome 6 Free", "Font Awesome 6 Brands", FontAwesome, "Material Icons", Roboto, Helvetica, Arial, sans-serif;
+    font-family: "Rubik", "Font Awesome 7 Brands", "Font Awesome 7 Free", "Font Awesome 6 Brands","Font Awesome 6 Free", FontAwesome, "Material Icons", Roboto, Helvetica, Arial, sans-serif;
     border: none;
     border-radius: 0px;
 }
