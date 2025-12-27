@@ -1,254 +1,339 @@
+/** Grabbed from https://github.com/mylinuxforwork/dotfiles */
+@import "colors.css";
+
 * {
-    font-family: 'Rubik', 'Noto Sans Mono', 'Font Awesome 6 Free', 'Font Awesome 6 Brands', monospace;
-    font-size: 12px;
+    font-family: "Rubik", "Font Awesome 7 Brands", "Font Awesome 6 Free", "Font Awesome 6 Brands", FontAwesome, "Material Icons", Roboto, Helvetica, Arial, sans-serif;
+    border: none;
+    border-radius: 0px;
 }
 
 window#waybar {
-    background-color: rgba(0, 0, 0, 0);
-    color: #ffffff;
-    transition-property: background-color;
-    transition-duration: .5s;
-    font-weight: 500;
+    background: transparent;
 }
 
-window#waybar.hidden {
-    opacity: 0.2;
+.modules-left {
+    background-color: @surface;
+    border-radius: 8px;
+    background: radial-gradient(circle at 50% 250%, alpha(darker(@surface),0.9), alpha(@surface_dim,0.9)) padding-box,
+        linear-gradient(@primary,@on_primary) border-box;
+    border: 1px solid transparent;	
+    opacity:0.8;
+    padding:0 8px;
+    margin:4px 8px;
+    box-shadow: 0 2px 3px @shadow;
+}
+
+.modules-right {
+    background-color: @surface;
+    border-radius: 12px;
+    background: radial-gradient(circle at 50% 250%, alpha(darker(@surface),0.9), alpha(@surface_dim,0.9)) padding-box,
+        linear-gradient(@primary,@on_primary) border-box;
+    border: 1px solid transparent;	
+    opacity:0.8;
+    padding:0 8px;
+    margin:4px 8px;
+    box-shadow: 0 2px 3px @shadow;
+}
+
+.modules-center {
+    background-color: @surface;
+    border-radius: 12px;
+    background: radial-gradient(circle at 50% 250%, alpha(darker(@surface),0.9), alpha(@surface_dim,0.9)) padding-box,
+        linear-gradient(@primary,@on_primary) border-box;
+    border: 1px solid transparent;	
+    padding:0 8px;
+    opacity:0.8;
+    margin:4px 8px;
+    box-shadow: 0 2px 3px @shadow;
+}
+
+label.module {
+    font-size: 14px;
+    margin: 0px 6px;
+    border-radius: 5px;
 }
 
 /*
-window#waybar.empty {
-    background-color: transparent;
+label.module {
+    font-size: 14px;
+    color: @on_surface;
+    padding:3px 10px;
+    transition: all 0.3s ease-out;    
+    background: radial-gradient(circle at 50% 250%, @on_tertiary_fixed_variant, @on_tertiary_fixed) padding-box,
+        linear-gradient(@on_primary_fixed_variant, @on_primary_fixed) border-box;
+    border-radius: 10px;
+    border: 0px solid transparent;	
 }
-window#waybar.solo {
-    background-color: #FFFFFF;
+
+label.module:hover {
 }
 */
 
+/* -----------------------------------------------------
+ * Workspaces
+ * ----------------------------------------------------- */
 
-window#waybar.termite {
-    background-color: #3F3F3F;
-}
-
-window#waybar.chromium {
-    background-color: #000000;
-    border: none;
-}
-
-button {
-    /* Use box-shadow instead of border so the text isn't offset */
-    box-shadow: inset 0 -3px transparent;
-    /* Avoid rounded borders under each button name */
-    border: none;
-    border-radius: 0;
-}
-
-/* https://github.com/Alexays/Waybar/wiki/FAQ#the-workspace-buttons-have-a-strange-hover-effect */
-button:hover {
-    background: inherit;
-    box-shadow: inset 0 -3px #ffffff;
-}
-
-/* you can set a style on hover for any module like this */
-#pulseaudio:hover {
-    background-color: #a37800;
+#workspaces {
+    padding: 5px 3px;
 }
 
 #workspaces button {
-    padding: 0 5px;
-    background-color: transparent;
-    color: #ffffff;
+    border-radius: 8px;
+    padding:0px 8px 0px 4px;
+    margin:0px 2px 0px 2px;
+}
+
+#workspaces button.active {
+    background:@primary;
+    color:@on_primary;
 }
 
 #workspaces button:hover {
-    background: rgba(0, 0, 0, 0.2);
+    background:@primary;
+    color:@on_primary;
 }
 
-#workspaces button.focused {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+/* -----------------------------------------------------
+ * Tooltips
+ * ----------------------------------------------------- */
+
+tooltip {
+    background-color: @surface;
+    border-radius: 12px;
+    background: radial-gradient(circle at 50% 250%, @surface, @surface_dim) padding-box,
+        linear-gradient(#FFFFFF,@on_primary) border-box;
+    border: 1px solid transparent;	
+    opacity:0.7;
+    margin:10px;
 }
 
-#workspaces button.urgent {
-    background-color: #eb4d4b;
+tooltip label {
+    color: @on_surface;
 }
 
-#mode {
-    background-color: #64727D;
-    box-shadow: inset 0 -3px #ffffff;
+/* -----------------------------------------------------
+ * Window
+ * ----------------------------------------------------- */
+
+#window {
 }
 
-#groupclock,
-#battery,
-#cpu,
-#memory,
-#disk,
-#temperature,
-#backlight,
-#network,
-#pulseaudio,
-#wireplumber,
-#custom-media,
-#tray,
-#mode,
-#idle_inhibitor,
-#scratchpad,
-#power-profiles-daemon,
-#mpd {
-    padding: 0 4px;
-    margin: 2px 3px;
+window#waybar.empty #window {
+    background-color:transparent;
+}
+
+/* -----------------------------------------------------
+ * Taskbar
+ * ----------------------------------------------------- */
+
+#taskbar {
+    padding: 5px 0px 5px 0px;
+}
+
+#taskbar button {
+    border-radius: 6px;
+    padding:0px 5px 0px 5px;
+}
+
+#taskbar button:hover {
+    background:@primary;
+    color:@on_primary;    
+}
+
+#taskbar.empty {
+}
+
+/* -----------------------------------------------------
+ * Idle Inhibitor
+ * ----------------------------------------------------- */
+
+#idle_inhibitor {
+}
+
+#idle_inhibitor.activated {
+}
+
+/* -----------------------------------------------------
+ * App Launcher
+ * ----------------------------------------------------- */
+
+#custom-appmenu {
+    padding-right:3px;
+    padding-left:5px;
+}
+
+#custom-appmenu:hover {
+}
+
+/* -----------------------------------------------------
+ * Custom Now Playing
+ * ----------------------------------------------------- */
+
+#custom-nowplaying {
+}
+
+#custom-nowplaying.playing {
+}
+
+#custom-nowplaying.paused {
+}
+
+/* -----------------------------------------------------
+ * Custom Notification
+ * ----------------------------------------------------- */
+
+#custom-notification {
+    font-size: 20px;
+    font-family: "Material Icons";
+    color: @icon_color;
+}
+
+/* -----------------------------------------------------
+ * Custom Exit
+ * ----------------------------------------------------- */
+
+#custom-exit {
+}
+
+/* -----------------------------------------------------
+ * Custom Updates
+ * ----------------------------------------------------- */
+
+#custom-updates.yellow {
     border-radius: 8px;
-    background-color: rgba(0,0,0,0.5);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    color: #ffffff;
+    margin:5px 0px 5px 5px;
+    padding:0px 6px 0px 6px;
+    background-color: @secondary;
+    color: @on_secondary;
 }
 
-#window,
-#workspaces {
-    margin: 0 0px;
+#custom-updates.red {
+    border-radius: 8px;
+    margin:6px 0px 6px 7px;
+    padding:0px 6px 0px 6px;
+    background-color: @error;
+    color:@on_error;
 }
 
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left > widget:first-child > #workspaces {
-    margin-left: 4px;
+/* -----------------------------------------------------
+ * Hardware Group
+ * ----------------------------------------------------- */
+
+#disk,#memory,#cpu,#language {
 }
 
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right > widget:last-child > #workspaces {
-    margin-right: 4px;
+#language {
 }
 
-#groupclock {
-    min-width: 72px;
-    padding: 2px;
+/* -----------------------------------------------------
+ * Power Profiles Daemon
+ * ----------------------------------------------------- */
+
+#power-profiles-daemon {
+}
+
+/* -----------------------------------------------------
+ * Clock
+ * ----------------------------------------------------- */
+
+#clock {
+    margin-left: 12px;
+    margin-right: 12px;
 }
 
 #clock.time {
     font-size: 16px;
+    font-weight: 700;
 }
 #clock.date {
     margin: -2px 0;
     font-size: 10px;
 }
 
+#clock:hover {
+}
+
+/* -----------------------------------------------------
+ * Backlight
+ * ----------------------------------------------------- */
+
+#backlight {
+}
+
+#backlight:hover {
+}
+
+/* -----------------------------------------------------
+ * Pulseaudio
+ * ----------------------------------------------------- */
+
+#pulseaudio {
+}
+
+#pulseaudio:hover {
+}
+
+#pulseaudio.muted {
+}
+
+/* -----------------------------------------------------
+ * Network
+ * ----------------------------------------------------- */
+
+#network {
+}
+
+#network.ethernet:hover {
+}
+
+#network.wifi:hover {
+}
+
+#network.ethernet {
+}
+
+#network.wifi {
+}
+
+/* -----------------------------------------------------
+ * Bluetooth
+ * ----------------------------------------------------- */
+
+#bluetooth, #bluetooth.on, #bluetooth.connected {
+}
+
+#bluetooth:hover {
+}
+
+#bluetooth.off {
+}
+
+/* -----------------------------------------------------
+ * Battery
+ * ----------------------------------------------------- */
+
 #battery {
-    background-color: rgba(0,0,0,50);
 }
 
 #battery.charging, #battery.plugged {
-    color: #ffffff;
-    background-color: #26A65B;
 }
 
 @keyframes blink {
     to {
-        background-color: #ffffff;
-        color: #000000;
+        background-color: @background;
+        color: @on_surface;
     }
 }
 
-/* Using steps() instead of linear as a timing function to limit cpu usage */
 #battery.critical:not(.charging) {
-    background-color: #f53c3c;
-    color: #ffffff;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: steps(12);
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
 }
 
-#power-profiles-daemon {
-    min-width: 24px;
-}
-
-#power-profiles-daemon.performance {
-    background-color: rgba(245, 60, 60, 0.2);
-    color: rgba(255, 60, 60, 1);
-}
-
-#power-profiles-daemon.balanced {
-    background-color: rgba(41, 128, 185, 0.2);
-    color: #091D2A;
-}
-
-#power-profiles-daemon.power-saver {
-    background-color: rgba(46, 204, 113, 0.2);
-    color: #13532E;
-}
-
-label:focus {
-    background-color: #000000;
-}
-
-#cpu {
-    background-color: #2ecc71;
-    color: #000000;
-}
-
-#memory {
-    background-color: #9b59b6;
-}
-
-#disk {
-    background-color: #964B00;
-}
-
-#backlight {
-    background-color: #90b1b1;
-}
-
-#network {
-    background-color: #2980b9;
-}
-
-#network.disconnected {
-    background-color: #f53c3c;
-}
-
-#pulseaudio {
-    background-color: rgba(163, 120, 0, 0.5);
-    color: #000000;
-}
-
-#pulseaudio.muted {
-    background-color: #90b1b1;
-    color: #2a5c45;
-}
-
-#wireplumber {
-    background-color: #fff0f5;
-    color: #000000;
-}
-
-#wireplumber.muted {
-    background-color: #f53c3c;
-}
-
-#custom-media {
-    background-color: #66cc99;
-    color: #2a5c45;
-    min-width: 100px;
-}
-
-#custom-media.custom-spotify {
-    background-color: #66cc99;
-}
-
-#custom-media.custom-vlc {
-    background-color: #ffa000;
-}
-
-#temperature {
-    background-color: #f0932b;
-}
-
-#temperature.critical {
-    background-color: #eb4d4b;
-}
+/* -----------------------------------------------------
+ * Tray
+ * ----------------------------------------------------- */
 
 #tray {
-    padding: 0px 16px;
+    padding: 0px 0px 0px 8px;
 }
 
 #tray > .passive {
@@ -257,84 +342,4 @@ label:focus {
 
 #tray > .needs-attention {
     -gtk-icon-effect: highlight;
-    background-color: #eb4d4b;
-}
-
-#idle_inhibitor {
-    background-color: #2d3436;
-}
-
-#idle_inhibitor.activated {
-    background-color: #ecf0f1;
-    color: #2d3436;
-}
-
-#mpd {
-    background-color: #66cc99;
-    color: #2a5c45;
-}
-
-#mpd.disconnected {
-    background-color: #f53c3c;
-}
-
-#mpd.stopped {
-    background-color: #90b1b1;
-}
-
-#mpd.paused {
-    background-color: #51a37a;
-}
-
-#language {
-    background: #00b093;
-    color: #740864;
-    padding: 0 5px;
-    margin: 0 5px;
-    min-width: 16px;
-}
-
-#keyboard-state {
-    background: #97e1ad;
-    color: #000000;
-    padding: 0 0px;
-    margin: 0 5px;
-    min-width: 16px;
-}
-
-#keyboard-state > label {
-    padding: 0 5px;
-}
-
-#keyboard-state > label.locked {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-#scratchpad {
-    background: rgba(0, 0, 0, 0.2);
-}
-
-#scratchpad.empty {
-	background-color: transparent;
-}
-
-#privacy {
-    padding: 0;
-}
-
-#privacy-item {
-    padding: 0 5px;
-    color: white;
-}
-
-#privacy-item.screenshare {
-    background-color: #cf5700;
-}
-
-#privacy-item.audio-in {
-    background-color: #1ca000;
-}
-
-#privacy-item.audio-out {
-    background-color: #0069d4;
 }
