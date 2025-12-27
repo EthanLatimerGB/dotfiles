@@ -76,21 +76,21 @@
         // }
     },
     "group/groupclock": {
-        "orientation": "vertical",
+        "orientation": "horizontal",
         "modules": [
-            "clock#time",
-            "clock#date"
+            "clock#date",
+            "clock#time"
         ],
     },
     "clock#time": {
         // "timezone": "America/New_York",
         "interval": 1,
-        "format": "{:%H:%M:%S}",
+        "format": "{:%H:%M}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     },
     "clock#date": {
         "interval": 3600,
-        "format": "{:%Y-%m-%d}",
+        "format": "{:%Y-%m-%d} - ",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
     },
     "cpu": {
