@@ -7,20 +7,18 @@
     "spacing": 0, // Gaps between modules (4px)
     // Choose the order of the modules
     "modules-left": [
-        "custom/power",
         "hyprland/workspaces",
-        "hyprland/submap"
     ],
     "modules-center": [
         "group/groupclock",
     ],
     "modules-right": [
-        "mpris",
         "keyboard-state",
-        "hyprland/scratchpad",
+        "mpris",
         "idle_inhibitor",
         "memory",
         "temperature",
+        "wireplumber",
         "power-profiles-daemon",
 	"tray"
     ],
@@ -29,7 +27,7 @@
         "format": "{name}: {icon}",
         "format-icons": {
             "urgent": "",
-            "focused": "",
+            "active": "",
             "default": ""
         }
     },
@@ -47,32 +45,6 @@
         "format-icons": ["", ""],
         "tooltip": true,
         "tooltip-format": "{app}: {title}"
-    },
-    "mpd": {
-        "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
-        "format-disconnected": "Disconnected ",
-        "format-stopped": "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ",
-        "unknown-tag": "N/A",
-        "interval": 5,
-        "consume-icons": {
-            "on": " "
-        },
-        "random-icons": {
-            "off": "<span color=\"#f53c3c\"></span> ",
-            "on": " "
-        },
-        "repeat-icons": {
-            "on": " "
-        },
-        "single-icons": {
-            "on": "1 "
-        },
-        "state-icons": {
-            "paused": "",
-            "playing": ""
-        },
-        "tooltip-format": "MPD (connected)",
-        "tooltip-format-disconnected": "MPD (disconnected)"
     },
     "mpris": {
             "interval": 1,
@@ -194,16 +166,10 @@
         },
         "on-click": "pavucontrol"
     },
-    "custom/power": {
-        "format" : "⏻",
-		"tooltip": false,
-		"menu": "on-click",
-		"menu-file": "$HOME/.config/waybar/power_menu.xml", // Menu file in resources folder
-		"menu-actions": {
-			"shutdown": "shutdown",
-			"reboot": "reboot",
-			"suspend": "systemctl suspend",
-			"hibernate": "systemctl hibernate"
-		}
+    "wireplumber": {
+        "format": "{volume}% {icon}",
+        "format-muted": "",
+        "on-click": "helvum",
+        "format-icons": ["", "", ""]
     }
 }
