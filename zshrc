@@ -113,4 +113,14 @@ export HSA_OVERRIDE_GFX_VERSION=10.3.0
 alias uni="cd ~/Dev/University/"
 
 
-. "$HOME/.local/bin/env"
+# . "$HOME/.local/bin/env"
+
+# bun completions
+[ -s "/home/ethanlatimer/.bun/_bun" ] && source "/home/ethanlatimer/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+
+[ -f "/home/ethanlatimer/.ghcup/env" ] && . "/home/ethanlatimer/.ghcup/env" # ghcup-env
