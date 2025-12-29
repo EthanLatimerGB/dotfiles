@@ -3,6 +3,11 @@
 #
 # This is a program that handles brightness for PC-Laptops, depending on your setup.
 #
+# :Help
+# $ brightness.sh set <0-100>
+# $ brightness.sh inc <UP/DOWN>
+# $ brightness.sh recover-idle
+#
 
 # constants
 CACHE_FILE="/tmp/brightness_cache_el"
@@ -10,11 +15,12 @@ LOCKFILE="/tmp/brightness_el.lock"
 MAX_BRIGHTNESS="100"
 
 function main {
-	if [[ $# != 1 ]]; then
+	if [[ $# > 2 || $# == 0 ]]; then
 		echo_err "Unable to change brightness - args count incorrect"
 		return 1
 	fi
-	increment=$1
+	command=$1
+	value=$2
 
 	# Acquire Lock
 	exec 200>"$LOCKFILE"
@@ -25,24 +31,20 @@ function main {
 	fi
 
 	touch $CACHE_FILE
-	
-	
-	monitor_handler $increment || {
-		echo_err "No Monitor Detected" "Double check with ddutils or brightnessctl to see if you can control your monitor manually."
-		exit 1
-	}
 
+	command_handler $command $value
+	
 	echo "Complete"
 }
 
 # functions
 function echo_err {
-	echo "FAILURE: $1 $2"
+	echo "FAILURE: $1 $2" > /dev/tty
 	notify-send -a "Brightness Control" -u critical -t 3000 "$1" "$2"
 }
 
 function echo_noti {
-	echo "INFO: $1 $2"
+	echo "INFO: $1 $2" > /dev/tty
 	notify-send -a "Brightness Control" -u normal -t 3000 "$1" "$2"
 }
 
@@ -87,7 +89,35 @@ function check_utils_exist {
 	return 0
 }
 
-function modify_brightness {
+
+function get_current_brightness {
+	brightness=$(cache_get "g_brightness")
+	if [[ -z "$brightness" ]]; then
+		brightness="$(ddcutil getvcp 10 | awk '/current value =[[:space:]]+[0-9][0-9]/ { gsub(/.*current value *= */,""); gsub(/,.*/,""); print }')"
+		cache_set "g_brightness" "$brightness"
+	fi
+	echo $brightness
+}
+
+function set_brightness {
+	new_brightness=$1
+	old_brightness=$(cache_get "g_brightness")
+
+	cache_set "g_brightness" "$new_brightness"
+	cache_set "g_prev_brightness" "$old_brightness"
+
+	ddcutil setvcp 10 "$new_brightness" 
+	echo_progress $new_brightness
+}
+
+function set_pre_idle_brightness {
+	old_brightness=$(cache_get "g_prev_brightness")
+	cache_set "g_brightness" "$old_brightness"
+
+	ddcutil setvcp 10 "$old_brightness" 
+}
+
+function calculate_brightness {
 	local current=$1
 	local delta=$2
 
@@ -104,36 +134,47 @@ function modify_brightness {
 	echo "$result"
 }
 
-function monitor_handler {
+function command_handler {
+	command=$1
+	value=$2
+
+	case "$command" in
+	    "set")
+		echo_noti "set"
+		;;
+	    "inc")
+		monitor_b_delta_change $value
+		;;
+	    "recover-idle")
+		set_pre_idle_brightness
+		;;
+	    *)
+		return 0
+		;;
+	esac
+}
+
+function monitor_b_delta_change {
 	if brightnessctl | grep -q backlight; then
-		echo "brightness"
+		echo_noti "Not Specified for Brightnessctl yet" "Fix later"
 		return 0
 	elif command -v ddcutil >/dev/null 2>&1; then
-		echo "ddcutil"
+		brightness=$(get_current_brightness)
 
-		brightness=$(cache_get "g_brightness")
-		if [[ -z "$brightness" ]]; then
-			brightness="$(ddcutil getvcp 10 | awk '/current value =[[:space:]]+[0-9][0-9]/ { gsub(/.*current value *= */,""); gsub(/,.*/,""); print }')"
-			cache_set "g_brightness" "$brightness"
+		if [[ $1 == "UP" ]]; then
+			new_brightness=$(calculate_brightness "$brightness" 10)
+		elif [[ $1 == "DOWN" ]]; then
+			new_brightness=$(calculate_brightness "$brightness" -10)
 		fi
 
-		if (( $1 == 1 )); then
-			new_brightness=$(modify_brightness "$brightness" 10)
-		else
-			new_brightness=$(modify_brightness "$brightness" -10)
-		fi
-
-		cache_set "g_brightness" "$new_brightness"
-
-		ddcutil setvcp 10 "$new_brightness" 
-		echo_progress $new_brightness
-
+		set_brightness $new_brightness
 		return 0
 	else
 		echo "none"
 		return 1
 	fi
 }
+
 
 main "$@"
 
