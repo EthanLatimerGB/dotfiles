@@ -109,7 +109,7 @@ function set_brightness {
 }
 
 function set_idle_brightness {
-	idle=10
+	idle=0
 	set_brightness $idle
 }
 
