@@ -89,7 +89,6 @@ function check_utils_exist {
 	return 0
 }
 
-
 function get_current_brightness {
 	brightness=$(cache_get "g_brightness")
 	if [[ -z "$brightness" ]]; then
@@ -107,14 +106,39 @@ function set_brightness {
 	cache_set "g_prev_brightness" "$old_brightness"
 
 	ddcutil setvcp 10 "$new_brightness" 
-	echo_progress $new_brightness
+}
+
+function set_idle_brightness {
+	idle=10
+	set_brightness $idle
 }
 
 function set_pre_idle_brightness {
 	old_brightness=$(cache_get "g_prev_brightness")
-	cache_set "g_brightness" "$old_brightness"
+	set_brightness $old_brightness
+}
 
-	ddcutil setvcp 10 "$old_brightness" 
+
+function monitor_b_delta_change {
+	if brightnessctl | grep -q backlight; then
+		echo_noti "Not Specified for Brightnessctl yet" "Fix later"
+		return 0
+	elif command -v ddcutil >/dev/null 2>&1; then
+		brightness=$(get_current_brightness)
+
+		if [[ $1 == "UP" ]]; then
+			new_brightness=$(calculate_brightness "$brightness" 10)
+		elif [[ $1 == "DOWN" ]]; then
+			new_brightness=$(calculate_brightness "$brightness" -10)
+		fi
+
+		set_brightness $new_brightness
+		echo_progress $new_brightness
+		return 0
+	else
+		echo "none"
+		return 1
+	fi
 }
 
 function calculate_brightness {
@@ -140,10 +164,20 @@ function command_handler {
 
 	case "$command" in
 	    "set")
-		echo_noti "set"
+		if ! [[ $value =~ ^[0-9]+$ ]]; then
+			echo_err "Value Provided Invalid" "Set commands value is not a number"
+			return 1
+		fi
+
+		brightness=$(calculate_brightness $value 0)
+		set_brightness $brightness
+		echo_progress $brightness
 		;;
 	    "inc")
 		monitor_b_delta_change $value
+		;;
+	    "idle")
+		set_idle_brightness
 		;;
 	    "recover-idle")
 		set_pre_idle_brightness
@@ -154,26 +188,6 @@ function command_handler {
 	esac
 }
 
-function monitor_b_delta_change {
-	if brightnessctl | grep -q backlight; then
-		echo_noti "Not Specified for Brightnessctl yet" "Fix later"
-		return 0
-	elif command -v ddcutil >/dev/null 2>&1; then
-		brightness=$(get_current_brightness)
-
-		if [[ $1 == "UP" ]]; then
-			new_brightness=$(calculate_brightness "$brightness" 10)
-		elif [[ $1 == "DOWN" ]]; then
-			new_brightness=$(calculate_brightness "$brightness" -10)
-		fi
-
-		set_brightness $new_brightness
-		return 0
-	else
-		echo "none"
-		return 1
-	fi
-}
 
 
 main "$@"
