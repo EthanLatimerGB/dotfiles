@@ -122,5 +122,8 @@ alias uni="cd ~/Dev/University/"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
+# Cargo
+export PATH="$HOME/.cargo/bin:$PATH"
+
 
 [ -f "/home/ethanlatimer/.ghcup/env" ] && . "/home/ethanlatimer/.ghcup/env" # ghcup-env
