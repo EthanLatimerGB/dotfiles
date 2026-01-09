@@ -1,0 +1,112 @@
+window {
+	margin: 0;
+	padding: 0;
+
+	background-color: alpha(black, 0.7); /* glass transparency */
+	border: 1px solid #596EA6; 
+	border-radius: 12px;
+
+	font-family: "Rubik", "Cantarell", sans-serif;
+	font-size: 14px; /* overall zoomed */
+	font-weight: 500;
+
+	animation: windowDrop 220ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== INPUT ===== */
+
+#input {
+    margin: 16px;
+    padding: 4px 8px;
+
+    border: none;
+    outline: none;
+    box-shadow: none;
+
+    -gtk-outline-radius: 0;
+    -gtk-outline-offset: 0;
+    -gtk-outline-width: 0;
+
+    border-radius: 16px;
+
+    background-color: rgba(255, 255, 255, 0.06);
+    color: rgb(235, 237, 233);
+    font-size: 18px;
+
+    transition: background-color 150ms ease, transform 150ms ease;
+}
+
+#input:focus {
+    background-color: rgba(255, 255, 255, 0.10);
+    transform: translateY(-1px);
+    border: none;
+    outline: none;
+    box-shadow: none;
+}
+
+#input::placeholder {
+    color: rgba(220, 223, 218, 0.55);
+}
+
+/* ===== LIST ===== */
+
+#outer-box,
+#scroll {
+    background: transparent;
+}
+
+#inner-box {
+    margin: 6px 10px 16px;
+    background: transparent;
+
+    animation: contentDrop 260ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ===== ENTRIES ===== */
+
+#entry {
+    margin: 4px 10px;
+    padding: 8px 10px;
+
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.02);
+
+    opacity: 0.75;
+    transition:
+        background-color 120ms ease,
+        transform 140ms ease,
+        opacity 120ms ease;
+}
+
+#entry:hover {
+    background-color: rgba(255, 255, 255, 0.06);
+    transform: translateX(6px);
+    opacity: 0.95;
+}
+
+#entry:selected {
+    background-color: rgba(255, 255, 255, 0.14);
+    transform: translateX(10px);
+    opacity: 1;
+}
+
+/* ===== ICON SPACING ===== */
+
+#entry image {
+    margin-right: 16px; /* more breathing room */
+    margin-left: 4px;
+    opacity: 0.9;
+}
+
+/* ===== TEXT ===== */
+
+#text {
+    color: rgb(225, 228, 223);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#text:selected {
+    color: rgba(255, 255, 255, 0.98);
+}
+

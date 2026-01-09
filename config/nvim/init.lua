@@ -264,7 +264,7 @@ require("lazy").setup({
 		end,
 	},
 	{ "tpope/vim-fugitive" },
-	{ "mrcjkb/haskell-tools.nvim", version = "^3", lazy = false },
+	{ "mrcjkb/haskell-tools.nvim", version = "^6", lazy = false },
 
 	-- NOTE: Plugins can also be added by using a table,
 	-- with the first argument being the link and the following
