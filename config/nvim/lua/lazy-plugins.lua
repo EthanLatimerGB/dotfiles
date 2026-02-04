@@ -430,6 +430,7 @@ require("lazy").setup({
 					}, -- This is how we get lsp to import correct ARM overrides of stdlib (pico)
 					single_file_support = true,
 				},
+				marksman = {},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -459,16 +460,6 @@ require("lazy").setup({
 						local server = servers[server_name] or {}
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
-					end,
-					-- Custom handler for vue_ls to ensure vtsls starts first
-					vue_ls = function()
-						local server = servers.vue_ls or {}
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-
-						-- Delay vue_ls startup slightly to let vtsls attach first
-						vim.defer_fn(function()
-							require("lspconfig").vue_ls.setup(server)
-						end, 100)
 					end,
 				},
 			})
@@ -574,6 +565,7 @@ require("lazy").setup({
 				lua = { "stylua" },
 				php = { "./vendor/bin/pint" },
 				javascript = { "prettier" },
+				json = { "prettier" },
 				vue = { "prettier" },
 				python = { "black" },
 				c = { "indent" },
