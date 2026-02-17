@@ -134,3 +134,6 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 
 # Haskell Development tools
 [ -f "/home/ethanlatimer/.ghcup/env" ] && . "/home/ethanlatimer/.ghcup/env" # ghcup-env
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
