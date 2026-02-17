@@ -1,12 +1,8 @@
 -- See `:help vim.opt`
 
--- Make line numbers default
 vim.opt.number = true
 vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
-
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -61,3 +57,6 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Replcae tabs with spaces
+vim.opt.expandtab = true
