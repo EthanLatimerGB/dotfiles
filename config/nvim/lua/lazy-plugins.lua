@@ -35,10 +35,13 @@ require("lazy").setup({
             })
         end,
     },
+
     { -- Simple Git utility, but Gitsigns is used much more
         "tpope/vim-fugitive",
     },
+
     { "mrcjkb/haskell-tools.nvim", version = "^6", lazy = false },
+
     { -- Adds git related signs to the gutter, as well as utilities for managing changes
         "lewis6991/gitsigns.nvim",
         opts = {
@@ -725,9 +728,6 @@ require("lazy").setup({
                 python = { "black" },
                 c = { "indent" },
                 cpp = { "indent" },
-                -- Conform can also run multiple formatters sequentially
-                -- python = { "isort", "black" },
-                --
                 -- You can use 'stop_after_first' to run the first available formatter from the list
                 -- javascript = { "prettierd", "prettier", stop_after_first = true },
             },
