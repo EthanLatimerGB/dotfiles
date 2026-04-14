@@ -549,7 +549,7 @@ require("lazy").setup({
 					return nil
 				else
 					return {
-						timeout_ms = 500,
+						timeout_ms = 5000,
 						lsp_format = "fallback",
 					}
 				end
@@ -566,9 +566,10 @@ require("lazy").setup({
 				javascript = { "prettier" },
 				json = { "prettier" },
 				vue = { "prettier" },
-				python = { "black" },
+				-- python = { "black" },
 				c = { "indent" },
 				cpp = { "indent" },
+				jinja = { "djlint" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
