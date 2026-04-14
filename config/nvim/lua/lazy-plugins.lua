@@ -398,7 +398,6 @@ require("lazy").setup({
 				-- But for many setups, the LSP (`tsserver`) will work just fine
 				-- tsserver = {},
 				--
-
 				pyright = {
 					filetypes = { "python" },
 					analysis = {
@@ -430,6 +429,7 @@ require("lazy").setup({
 					}, -- This is how we get lsp to import correct ARM overrides of stdlib (pico)
 					single_file_support = true,
 				},
+				marksman = {},
 			}
 
 			-- Ensure the servers and tools above are installed
@@ -459,16 +459,6 @@ require("lazy").setup({
 						local server = servers[server_name] or {}
 						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
 						require("lspconfig")[server_name].setup(server)
-					end,
-					-- Custom handler for vue_ls to ensure vtsls starts first
-					vue_ls = function()
-						local server = servers.vue_ls or {}
-						server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
-
-						-- Delay vue_ls startup slightly to let vtsls attach first
-						vim.defer_fn(function()
-							require("lspconfig").vue_ls.setup(server)
-						end, 100)
 					end,
 				},
 			})
@@ -559,7 +549,7 @@ require("lazy").setup({
 					return nil
 				else
 					return {
-						timeout_ms = 500,
+						timeout_ms = 5000,
 						lsp_format = "fallback",
 					}
 				end
@@ -574,10 +564,12 @@ require("lazy").setup({
 				lua = { "stylua" },
 				php = { "./vendor/bin/pint" },
 				javascript = { "prettier" },
+				json = { "prettier" },
 				vue = { "prettier" },
-				python = { "black" },
+				-- python = { "black" },
 				c = { "indent" },
 				cpp = { "indent" },
+				jinja = { "djlint" },
 				-- Conform can also run multiple formatters sequentially
 				-- python = { "isort", "black" },
 				--
@@ -748,6 +740,9 @@ require("lazy").setup({
 			ensure_installed = {
 				"bash",
 				"c",
+				"python",
+				"vue",
+				"javascript",
 				"diff",
 				"html",
 				"lua",
@@ -775,6 +770,16 @@ require("lazy").setup({
 		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
 		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+	},
+
+	{
+		"MeanderingProgrammer/render-markdown.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-mini/mini.nvim" }, -- if you use the mini.nvim suite
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
+		-- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+		---@module 'render-markdown'
+		---@type render.md.UserConfig
+		opts = {},
 	},
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
