@@ -107,6 +107,14 @@ source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 alias uni="cd ~/Dev/University/"
 
+# macOS-only config
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$HOME/.dotfiles/scripts:$PATH"
+fi
+
+# Machine-specific config (untracked)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
 
 # . "$HOME/.local/bin/env"
 
