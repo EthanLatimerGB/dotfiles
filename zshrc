@@ -102,21 +102,12 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 alias uni="cd ~/Dev/University/"
 
-# macOS-only config
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  export PATH="$HOME/.dotfiles/scripts:$PATH"
-fi
-
 # Machine-specific config (untracked)
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
-
-
-# . "$HOME/.local/bin/env"
 
 # bun completions
 [ -s "/home/ethanlatimer/.bun/_bun" ] && source "/home/ethanlatimer/.bun/_bun"
@@ -146,6 +137,14 @@ export NVM_DIR="$HOME/.nvm"
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
   [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+# OS Specific Configurations
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$HOME/.dotfiles/scripts:$PATH"
+  source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+else 
+  source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+fi
+
+# THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
