@@ -22,3 +22,10 @@ Assuming your dotfile repository is installed in the correct location (your home
 
 * `rcup -v <dotfile_name>` - to recover specific files. Example: `rcup -v .zshrc`
 
+## Mac Machine add this to .zshrc.local
+
+> ```
+> export PYENV_ROOT="$HOME/.pyenv"
+> [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+> eval "$(pyenv init - zsh)"
+> ```
