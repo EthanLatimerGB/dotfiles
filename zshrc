@@ -102,15 +102,18 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-source /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+source /opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 export HSA_OVERRIDE_GFX_VERSION=10.3.0
 alias uni="cd ~/Dev/University/"
+
+# macOS-only config
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="$HOME/.dotfiles/scripts:$PATH"
+fi
+
+# Machine-specific config (untracked)
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 
 # . "$HOME/.local/bin/env"
@@ -134,6 +137,14 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 
 # Haskell Development tools
 [ -f "/home/ethanlatimer/.ghcup/env" ] && . "/home/ethanlatimer/.ghcup/env" # ghcup-env
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - zsh)"
+
+export NVM_DIR="$HOME/.nvm"
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  [ -s "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm" ] && \. "/opt/homebrew/opt/nvm/etc/bash_completion.d/nvm"  # This loads nvm bash_completion
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"

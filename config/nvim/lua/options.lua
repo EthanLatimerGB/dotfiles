@@ -1,12 +1,8 @@
 -- See `:help vim.opt`
 
--- Make line numbers default
 vim.opt.number = true
 vim.opt.spell = true
 vim.opt.spelllang = "en_gb"
-
--- You can also add relative line numbers, to help with jumping.
---  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
@@ -20,7 +16,7 @@ vim.opt.showmode = false
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
 vim.schedule(function()
-	vim.opt.clipboard = "unnamedplus"
+    vim.opt.clipboard = "unnamedplus"
 end)
 
 -- Enable break indent
@@ -35,6 +31,9 @@ vim.opt.smartcase = true
 
 -- Keep signcolumn on by default
 vim.opt.signcolumn = "yes"
+
+-- Color anything past 80 characters
+vim.opt.colorcolumn = "80"
 
 -- Decrease update time
 vim.opt.updatetime = 250
@@ -61,3 +60,6 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+
+-- Replcae tabs with spaces
+vim.opt.expandtab = true
