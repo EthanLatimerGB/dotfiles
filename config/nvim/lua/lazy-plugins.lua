@@ -725,7 +725,7 @@ require("lazy").setup({
                 php = { "./vendor/bin/pint" },
                 javascript = { "prettier" },
                 vue = { "prettier" },
-                python = { "black" },
+                python = { "ruff format" },
                 c = { "indent" },
                 cpp = { "indent" },
                 -- You can use 'stop_after_first' to run the first available formatter from the list
