@@ -549,6 +549,11 @@ require("lazy").setup({
                     single_file_support = true,
                 },
                 kotlin_lsp = {},
+                tofu_ls = {
+                    cmd = { "tofu-ls", "serve" },
+                    filetypes = { "terraform", "terraform-vars" },
+                    root_markers = { ".terraform", ".git" },
+                },
             }
 
             -- Ensure the servers and tools above are installed
@@ -725,7 +730,7 @@ require("lazy").setup({
                 php = { "./vendor/bin/pint" },
                 javascript = { "prettier" },
                 vue = { "prettier" },
-                python = { "ruff format" },
+                python = { "ruff_fix", "ruff_format" },
                 c = { "indent" },
                 cpp = { "indent" },
                 -- You can use 'stop_after_first' to run the first available formatter from the list
