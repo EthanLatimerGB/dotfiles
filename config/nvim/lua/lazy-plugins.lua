@@ -554,6 +554,13 @@ require("lazy").setup({
                     filetypes = { "terraform", "terraform-vars" },
                     root_markers = { ".terraform", ".git" },
                 },
+                postgres_lsp = {
+                    cmd = { "postgres-language-server", "lsp-proxy" },
+                    filetypes = { "sql" },
+                },
+                bashls = {
+                    filetypes = { "bash", "sh" },
+                },
             }
 
             -- Ensure the servers and tools above are installed
@@ -572,6 +579,10 @@ require("lazy").setup({
             local ensure_installed = vim.tbl_keys(servers or {})
             vim.list_extend(ensure_installed, {
                 "stylua", -- Used to format Lua code
+                "shfmt", -- Used to format sh/bash
+                "shellcheck", -- Used by bashls for sh/bash diagnostics
+                "mbake", -- Used to format Makefiles
+                "checkmake", -- Makefile linter
             })
             require("mason-tool-installer").setup({
                 ensure_installed = ensure_installed,
@@ -724,6 +735,16 @@ require("lazy").setup({
                     command = "indent",
                     args = { "-linux" },
                 },
+                postgres_ls = {
+                    command = "postgres-language-server",
+                    args = { "format", "--stdin-file-path", "$FILENAME" },
+                    stdin = true,
+                },
+                mbake = {
+                    command = "mbake",
+                    args = { "format", "--stdin" },
+                    stdin = true,
+                },
             },
             formatters_by_ft = {
                 lua = { "stylua" },
@@ -733,6 +754,10 @@ require("lazy").setup({
                 python = { "ruff_fix", "ruff_format" },
                 c = { "indent" },
                 cpp = { "indent" },
+                sql = { "postgres_ls" },
+                sh = { "shfmt" },
+                bash = { "shfmt" },
+                make = { "mbake" },
                 -- You can use 'stop_after_first' to run the first available formatter from the list
                 -- javascript = { "prettierd", "prettier", stop_after_first = true },
             },
